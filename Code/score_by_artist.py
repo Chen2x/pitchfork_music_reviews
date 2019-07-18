@@ -1,12 +1,13 @@
 import pandas as pd
 import sqlite3 as sql
-from collections import Counter
-from itertools import chain
+import os
+#from collections import Counter
+#from itertools import chain
 #from sklearn.feature_extraction.text import TfidfVectorizer
 import numpy as np
 import re
 
-conn = sql.connect('dataset/database.sqlite')
+conn = sql.connect(os.path.join(os.pardir,'dataset/database.sqlite'))
 reviews = pd.read_sql_query("SELECT * FROM reviews", conn)
 artists = pd.read_sql_query("SELECT * FROM artists", conn)
 content = pd.read_sql_query("SELECT * FROM content", conn)
