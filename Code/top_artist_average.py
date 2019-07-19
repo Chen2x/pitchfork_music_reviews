@@ -11,8 +11,8 @@ genres = pd.read_sql_query("SELECT * FROM genres", conn)
 labels = pd.read_sql_query("SELECT * FROM labels", conn)
 years = pd.read_sql_query("SELECT * FROM years", conn)
 
-def multipleScore(releases):
-	query = "SELECT reviewid, artist, AVG(score) as avgscore, COUNT(artist) as releases FROM reviews GROUP BY artist HAVING COUNT(artist) > {} ORDER BY AVG(score) DESC LIMIT 10".format(releases)
+def multipleScore(releases, displayAmt):
+	query = "SELECT reviewid, artist, AVG(score) as avgscore, COUNT(artist) as releases FROM reviews GROUP BY artist HAVING COUNT(artist) > {} ORDER BY AVG(score) DESC LIMIT {}".format(releases, displayAmt)
 	multartists = pd.read_sql_query(query, conn)
 
 	#print(multartists)
@@ -20,9 +20,10 @@ def multipleScore(releases):
 
 
 
-def topArtistsinGenre(genre):
-	withGenre = pd.read_sql_query("SELECT reviewid, title, artist, score, genre FROM reviews LEFT JOIN genres USING(reviewid) AND (genre == {}) ORDER BY score DESC LIMIT 10".format(genre), conn)
+def topArtistsinGenre(genre, displayAmt):
+	query = "SELECT reviewid, title, artist, score, genre FROM reviews LEFT JOIN genres USING(reviewid) WHERE genre == \'{}\' ORDER BY score DESC LIMIT {}".format(genre, displayAmt)
+	withGenre = pd.read_sql_query(query, conn)
 	print(withGenre)
 
-topArtistsinGenre("rock")
-    #return reviews.loc[(reviews.score >= score) & (reviews.artist == artist.lower())]
+topArtistsinGenre("electronic", 20)
+    
