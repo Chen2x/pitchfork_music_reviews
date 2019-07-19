@@ -15,10 +15,24 @@ genres = pd.read_sql_query("SELECT * FROM genres", conn)
 labels = pd.read_sql_query("SELECT * FROM labels", conn)
 years = pd.read_sql_query("SELECT * FROM years", conn)
 
-#example (manual entry)
-print (reviews.loc[(reviews.score >= 8.5) & (reviews.artist == "radiohead")])
+import matplotlib.pyplot as plt
+import seaborn as sb
+from matplotlib import rcParams
 
-def s(score, artist):
-    return reviews.loc[(reviews.score >= score) & (reviews.artist == artist.lower())]
+sb.set_style('whitegrid')
+%matplotlib inline
+rcParams['figure.figsize'] = 15 ,15
 
-print (s(9, "Kanye West"))
+def Artist_Score_Vis(name):
+    kanye = reviews.loc[reviews['artist']==name]
+    x = kanye['pub_date'].iloc[::-1]
+    y = kanye['score'].iloc[::-1]
+    return (x,y)
+
+fig = plt.figure()
+ax = fig.add_axes([.1,.1,1,1])
+ax.set_ylim([0,11])
+
+x, y = Artist_Score_Vis("the beatles")
+
+ax.plot(x,y,marker = '+', mew = 15)
