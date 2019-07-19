@@ -21,9 +21,10 @@ def multipleScore(releases, displayAmt):
 
 
 def topArtistsinGenre(genre, displayAmt):
-	query = "SELECT reviewid, title, artist, score, genre FROM reviews LEFT JOIN genres USING(reviewid) WHERE genre == \'{}\' ORDER BY score DESC LIMIT {}".format(genre, displayAmt)
+	query = "SELECT artist, AVG(score) as avgscore, COUNT(artist) as releases, genre FROM reviews LEFT JOIN genres USING(reviewid) WHERE genre == \'{}\' GROUP BY artist ORDER BY AVG(score) DESC LIMIT {}".format(genre, displayAmt)
 	withGenre = pd.read_sql_query(query, conn)
 	print(withGenre)
 
-topArtistsinGenre("electronic", 20)
+#demo execution
+#topArtistsinGenre("jazz", 20)
     
