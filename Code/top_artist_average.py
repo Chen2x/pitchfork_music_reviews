@@ -14,8 +14,7 @@ years = pd.read_sql_query("SELECT * FROM years", conn)
 def multipleScore(releases, displayAmt):
 	query = "SELECT reviewid, artist, AVG(score) as avgscore, COUNT(artist) as releases FROM reviews GROUP BY artist HAVING COUNT(artist) > {} ORDER BY AVG(score) DESC LIMIT {}".format(releases, displayAmt)
 	multartists = pd.read_sql_query(query, conn)
-
-	#print(multartists)
+	print(multartists)
 
 
 
@@ -26,5 +25,5 @@ def topArtistsinGenre(genre, displayAmt):
 	print(withGenre)
 
 #demo execution
-#topArtistsinGenre("jazz", 20)
+topArtistsinGenre("rock", 20)
     
