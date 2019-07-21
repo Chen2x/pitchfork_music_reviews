@@ -1,6 +1,7 @@
 import pandas as pd
 import sqlite3 as sql
 import os
+import click
 
 
 conn = sql.connect(os.path.join(os.pardir,'dataset/database.sqlite'))
@@ -14,7 +15,7 @@ years = pd.read_sql_query("SELECT * FROM years", conn)
 def multipleScore(releases, displayAmt):
 	query = "SELECT reviewid, artist, AVG(score) as avgscore, COUNT(artist) as releases FROM reviews GROUP BY artist HAVING COUNT(artist) > {} ORDER BY AVG(score) DESC LIMIT {}".format(releases, displayAmt)
 	multartists = pd.read_sql_query(query, conn)
-	print(multartists)
+	return multartists
 
 
 
@@ -22,8 +23,20 @@ def multipleScore(releases, displayAmt):
 def topArtistsinGenre(genre, displayAmt):
 	query = "SELECT artist, AVG(score) as avgscore, COUNT(artist) as releases, genre FROM reviews LEFT JOIN genres USING(reviewid) WHERE genre == \'{}\' GROUP BY artist ORDER BY AVG(score) DESC LIMIT {}".format(genre, displayAmt)
 	withGenre = pd.read_sql_query(query, conn)
-	print(withGenre)
+	return withGenre
 
-#demo execution
-topArtistsinGenre("rock", 20)
+
+@click.command()
+@click.argument('function')
+@click.option('--releases')
+@click.option('--genre')
+@click.option('--amount', default = 10)
+def main(function, releases, genre, amount):
+	if releases:
+		click.echo(multipleScore(releases, amount))
+	if genre:
+		click.echo(topArtistsinGenre(genre, amount))
+
+if __name__ == '__main__':
+	main()
     
