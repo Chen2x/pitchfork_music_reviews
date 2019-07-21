@@ -13,7 +13,7 @@ labels = pd.read_sql_query("SELECT * FROM labels", conn)
 years = pd.read_sql_query("SELECT * FROM years", conn)
 
 
-def ArtistScoreFilter(score, artist):
+def artistScoreFilter(score, artist):
     return reviews.loc[(reviews.score >= score) & (reviews.artist == artist.lower())]
 
 
@@ -29,18 +29,3 @@ def topArtistsinGenre(genre, displayAmt):
 	return withGenre
 
 
-
-@click.command()
-@click.argument('function')
-@click.option('--releases')
-@click.option('--genre')
-@click.option('--amount', default = 10)
-def main(function, releases, genre, amount):
-	if releases:
-		click.echo(multipleScore(releases, amount))
-	if genre:
-		click.echo(topArtistsinGenre(genre, amount))
-
-if __name__ == '__main__':
-	main()
-    

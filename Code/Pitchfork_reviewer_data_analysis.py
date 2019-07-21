@@ -13,7 +13,6 @@ years = pd.read_sql_query("SELECT * FROM years", conn)
 
 from collections import Counter
 from itertools import chain
-from sklearn.feature_extraction.text import TfidfVectorizer
 import numpy as np
 import re
 
@@ -28,13 +27,13 @@ rcParams['figure.figsize'] = 15 ,15
 def avgReviewerScore(num_review):
     query = "SELECT reviewid, author, AVG(score) as avgscore, COUNT(author) as articles FROM reviews GROUP BY author HAVING COUNT(author)>2 ORDER BY AVG(score) DESC LIMIT %s" % num_review
     avgreviewer = pd.read_sql_query( query, conn)
-    print(avgreviewer)
+    return avgreviewer
 
 
 def reviewerGenres():
     query = "SELECT reviewid, author, AVG(score) as avgscore, genre,COUNT(author) as articles FROM (SELECT reviewid, author, score, genre FROM reviews LEFT JOIN genres USING (reviewid) ORDER BY author) GROUP BY author, genre"
     revGenres = pd.read_sql_query( query, conn)
-    print(revGenres)
+    return revGenres
 
 def TopAuthorsGenreDist(num_authors):
     query = "SELECT reviewid, author, AVG(score) as avgscore, genre,COUNT(author) as articles FROM (SELECT reviewid, author, score, genre FROM reviews LEFT JOIN genres USING (reviewid) ORDER BY author) GROUP BY author, genre"
@@ -91,9 +90,9 @@ def TopAuthorsGenreDist(num_authors):
     plt.show()
 
 num_review = 40
-print avgReviewerScore(num_review)
+#print avgReviewerScore(num_review)
 
-print reviewerGenres()
+#print reviewerGenres()
 
 num_authors = 3
-print TopAuthorsGenreDist(num_authors)
+#print TopAuthorsGenreDist(num_authors)
