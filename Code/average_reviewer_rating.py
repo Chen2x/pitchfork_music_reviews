@@ -1,6 +1,7 @@
 import pandas as pd
 import sqlite3 as sql
 import os
+import click
 
 
 conn = sql.connect(os.path.join(os.pardir,'dataset/database.sqlite'))
@@ -18,9 +19,10 @@ def avgReviewerScore():
 
 
 def reviewerGenres():
-	query = "SELECT reviewid, author, AVG(score) as avgscore, genre,COUNT(author) as articles FROM (SELECT reviewid, author, score, genre FROM reviews LEFT JOIN genres USING (reviewid) ORDER BY author) GROUP BY author, genre"
+	query = "SELECT reviewid, author, AVG(score) as avgscore, genre,COUNT(author) as articles FROM (SELECT reviewid, author, score, genre FROM reviews LEFT JOIN genres USING (reviewid) ORDER BY author) GROUP BY author, genre"	
 	revGenres = pd.read_sql_query( query, conn)
+	revGenres = revGenres.fillna("other")
 	print(revGenres)
 
-
+#reviewerGenres()
 
