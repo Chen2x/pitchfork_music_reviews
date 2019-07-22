@@ -13,10 +13,10 @@ from Pitchfork_artist_score_vis import artistScoreTimeVis, avgArtistScoreVis
 @click.option('--amount', default = 10)
 @click.option('--score')
 @click.option('--artist')
-@click.option('--numreview')
+@click.option('--minreview')
 @click.option('--name')
 @click.option('--topnumber')
-def main(function, releases, genre, amount, score, artist, numreview, name, topnumber):
+def main(function, releases, genre, amount, score, artist, minreview, name, topnumber):
 	if function == "multipleScore":
 		click.echo(multipleScore(releases, amount))
 	if function == "topArtistsinGenre":
@@ -24,7 +24,7 @@ def main(function, releases, genre, amount, score, artist, numreview, name, topn
 	if function == "artistScoreFilter":
 		click.echo(artistScoreFilter(score, artist))
 	if function == "avgReviewerScore":
-		click.echo(avgReviewerScore(numreview))
+		click.echo(avgReviewerScore(minreview, amount))
 	if function == "artistScoreTimeVis":
 		click.echo(artistScoreTimeVis(name))
 	if function == "avgArtistScoreVis":
