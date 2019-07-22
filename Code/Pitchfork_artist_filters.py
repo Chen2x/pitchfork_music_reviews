@@ -14,8 +14,8 @@ years = pd.read_sql_query("SELECT * FROM years", conn)
 
 
 def artistScoreFilter(score, artist):
-    return reviews.loc[(reviews.score >= score) & (reviews.artist == artist.lower())]
-
+    score_filter = reviews.loc[(reviews.score >= score) & (reviews.artist == artist.lower())]
+    return score_filter
 
 def multipleScore(releases, displayAmt):
 	query = "SELECT reviewid, artist, AVG(score) as avgscore, COUNT(artist) as releases FROM reviews GROUP BY artist HAVING COUNT(artist) > {} ORDER BY AVG(score) DESC LIMIT {}".format(releases, displayAmt)
@@ -27,4 +27,3 @@ def topArtistsinGenre(genre, displayAmt):
 	query = "SELECT artist, AVG(score) as avgscore, COUNT(artist) as releases, genre FROM reviews LEFT JOIN genres USING(reviewid) WHERE genre == \'{}\' GROUP BY artist ORDER BY AVG(score) DESC LIMIT {}".format(genre, displayAmt)
 	withGenre = pd.read_sql_query(query, conn)
 	return withGenre
-
