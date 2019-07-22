@@ -28,4 +28,3 @@ def topArtistsinGenre(genre, displayAmt):
 	withGenre = pd.read_sql_query(query, conn)
 	return withGenre
 
-
