@@ -1,19 +1,14 @@
 import pandas as pd
 import sqlite3 as sql
 import os
-#from collections import Counter
-#from itertools import chain
-#from sklearn.feature_extraction.text import TfidfVectorizer
+from collections import Counter
 import numpy as np
 import re
 
 conn = sql.connect(os.path.join(os.pardir,'dataset/database.sqlite'))
 reviews = pd.read_sql_query("SELECT * FROM reviews", conn)
-artists = pd.read_sql_query("SELECT * FROM artists", conn)
-content = pd.read_sql_query("SELECT * FROM content", conn)
 genres = pd.read_sql_query("SELECT * FROM genres", conn)
-labels = pd.read_sql_query("SELECT * FROM labels", conn)
-years = pd.read_sql_query("SELECT * FROM years", conn)
+
 
 import matplotlib.pyplot as plt
 import seaborn as sb
