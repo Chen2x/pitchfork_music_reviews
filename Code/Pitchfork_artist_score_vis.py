@@ -15,11 +15,11 @@ import seaborn as sb
 from matplotlib import rcParams
 
 sb.set_style('whitegrid')
-%matplotlib inline
+#%matplotlib inline
 rcParams['figure.figsize'] = 20 ,15
 rcParams.update({'font.size': 20})
 
-def ArtistScoreTimeVis(name):
+def artistScoreTimeVis(name):
     artist = reviews.loc[reviews['artist']==name.lower()]
     x = artist['pub_date'].iloc[::-1]
     y = artist['score'].iloc[::-1]
@@ -33,7 +33,7 @@ def ArtistScoreTimeVis(name):
     ax.plot(x,y,marker = '+', mew = 15)
     plt.show()
 
-def AvgArtistScoreVis(releases, top_number):
+def avgArtistScoreVis(releases, top_number):
     query = "SELECT reviewid, artist, AVG(score) as avgscore, COUNT(artist) as releases, genre FROM reviews LEFT JOIN genres USING(reviewid) GROUP BY artist HAVING COUNT(artist) > {} ORDER BY AVG(score) DESC LIMIT %s".format(releases) % top_number
     withGenre = pd.read_sql_query(query, conn)
     withGenre_withOther = withGenre.fillna({"genre": "other"})
