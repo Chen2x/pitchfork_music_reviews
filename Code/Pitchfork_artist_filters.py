@@ -14,14 +14,8 @@ years = pd.read_sql_query("SELECT * FROM years", conn)
 
 
 def artistScoreFilter(score, artist):
-<<<<<<< HEAD
-    score_filter = reviews.loc[(reviews.score >= score) & (reviews.artist == artist.lower())]
-    return score_filter
-=======
     results = reviews.loc[(reviews.score >= int(score))& (reviews.artist == artist.lower())]
     return results
-
->>>>>>> c84a9ced9cfe0f1d3c664357de73081c193e110b
 
 def multipleScore(releases, displayAmt):
 	query = "SELECT reviewid, artist, AVG(score) as avgscore, COUNT(artist) as releases FROM reviews GROUP BY artist HAVING COUNT(artist) > {} ORDER BY AVG(score) DESC LIMIT {}".format(releases, displayAmt)
