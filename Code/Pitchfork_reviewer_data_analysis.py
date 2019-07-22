@@ -21,10 +21,11 @@ sb.set_style('whitegrid')
 #%matplotlib inline
 rcParams['figure.figsize'] = 15 ,15
 
-def avgReviewerScore(num_review):
-    query = "SELECT reviewid, author, AVG(score) as avgscore, COUNT(author) as articles FROM reviews GROUP BY author HAVING COUNT(author)>2 ORDER BY AVG(score) DESC LIMIT %s" % num_review
-    avgreviewer = pd.read_sql_query( query, conn)
+def avgReviewerScore(min_reviews, displayAmt):
+    query = "SELECT reviewid, author, AVG(score) as avgscore, COUNT(author) as articles FROM reviews GROUP BY author HAVING COUNT(author)>= {} ORDER BY AVG(score) DESC LIMIT {}".format(min_reviews, displayAmt) 
+    avgreviewer = pd.read_sql_query(query, conn)
     return avgreviewer
+
 
 
 def reviewerGenres():
