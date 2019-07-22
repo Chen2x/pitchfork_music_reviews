@@ -14,7 +14,7 @@ from Pitchfork_artist_score_vis import artistScoreTimeVis, avgArtistScoreVis
 @click.option('--score', default = 0, help="minimum score or albums to be displayed")
 @click.option('--artist', help="artist name as string")
 @click.option('--minreview', default = 1, help="minimum reviews by an author")
-def main(function, releases, genre, amount, score, artist, minreview, name, topnumber, help):
+def main(function, releases, genre, amount, score, artist, minreview):
 	"""
 	Command line interface for entering query parameters 
 
