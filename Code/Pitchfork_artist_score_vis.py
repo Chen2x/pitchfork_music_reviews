@@ -16,19 +16,22 @@ from matplotlib import rcParams
 
 sb.set_style('whitegrid')
 %matplotlib inline
-rcParams['figure.figsize'] = 15 ,15
+rcParams['figure.figsize'] = 20 ,15
+rcParams.update({'font.size': 20})
 
 def ArtistScoreTimeVis(name):
     artist = reviews.loc[reviews['artist']==name.lower()]
     x = artist['pub_date'].iloc[::-1]
     y = artist['score'].iloc[::-1]
  
-	fig = plt.figure()
-	ax = fig.add_axes([.1,.1,1,1])
-	ax.set_ylim([0,11])
-
-	ax.plot(x,y,marker = '+', mew = 15)
-	plt.show()
+    fig = plt.figure()
+    ax = fig.add_axes([.1,.1,1,1])
+    ax.set_ylim([0,11])
+    ax.set_ylabel('Album Score')
+    ax.set_title(name + " album review scores over time")
+    
+    ax.plot(x,y,marker = '+', mew = 15)
+    plt.show()
 
 def AvgArtistScoreVis(releases, top_number):
     query = "SELECT reviewid, artist, AVG(score) as avgscore, COUNT(artist) as releases, genre FROM reviews LEFT JOIN genres USING(reviewid) GROUP BY artist HAVING COUNT(artist) > {} ORDER BY AVG(score) DESC LIMIT %s".format(releases) % top_number
@@ -36,14 +39,12 @@ def AvgArtistScoreVis(releases, top_number):
     withGenre_withOther = withGenre.fillna({"genre": "other"})
     print withGenre_withOther
     genre_count = Counter(withGenre_withOther['genre'])
-    
     z = genre_count.values()
     artist_names = genre_count.keys()
-    my_circle=plt.Circle((0,0), 0.7, color='white')
     plt.bar(artist_names, z)
-    #plt.legend(artist_names, loc = 'best')
+    plt.ylabel("Number of Reviews")
     plt.show()
 
-print ArtistScoreTimeVis("kanye west")
+
 
 
