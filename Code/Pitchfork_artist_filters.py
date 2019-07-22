@@ -11,7 +11,8 @@ genres = pd.read_sql_query("SELECT * FROM genres", conn)
 
 
 def artistScoreFilter(score, artist):
-    results = reviews.loc[(reviews.score >= int(score))& (reviews.artist == artist.lower())]
+    reviews_filter = reviews.drop(['reviewid', 'url', 'pub_weekday','pub_month','pub_day','pub_year'], axis = 1)
+    results = reviews_filter.loc[(reviews_filter.score >= int(score))& (reviews_filter.artist == artist.lower())]
     return results
 
 def multipleScore(releases, displayAmt):
