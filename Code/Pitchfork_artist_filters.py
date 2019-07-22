@@ -14,7 +14,8 @@ years = pd.read_sql_query("SELECT * FROM years", conn)
 
 
 def artistScoreFilter(score, artist):
-    return reviews.loc[(reviews.score >= score) & (reviews.artist == artist.lower())]
+    results = reviews.loc[(reviews.score >= int(score))& (reviews.artist == artist.lower())]
+    return results
 
 
 def multipleScore(releases, displayAmt):
