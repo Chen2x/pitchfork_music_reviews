@@ -31,7 +31,7 @@ def reviewerGenres():
     revGenres = pd.read_sql_query( query, conn)
     return revGenres
 
-def TopAuthorsGenreDist(num_authors):
+def topAuthorsGenreDist(num_authors):
     query = "SELECT reviewid, author, AVG(score) as avgscore, genre,COUNT(author) as articles FROM (SELECT reviewid, author, score, genre FROM reviews LEFT JOIN genres USING (reviewid) ORDER BY author) GROUP BY author, genre"
     revGenres = pd.read_sql_query(query, conn)
     query1 = "SELECT reviewid, author, title, artist, score, COUNT(author) as articles, pub_date, genre FROM reviews LEFT JOIN genres USING(reviewid) GROUP BY author ORDER BY COUNT(author) DESC LIMIT %s" % num_authors

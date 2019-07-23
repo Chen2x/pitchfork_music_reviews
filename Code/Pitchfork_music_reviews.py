@@ -1,6 +1,6 @@
 import click
 from Pitchfork_artist_filters import artistScoreFilter, multipleScore, topArtistsinGenre 
-from Pitchfork_reviewer_data_analysis import avgReviewerScore, reviewerGenres
+from Pitchfork_reviewer_data_analysis import avgReviewerScore, reviewerGenres, topAuthorsGenreDist
 from Pitchfork_artist_score_vis import artistScoreTimeVis, avgArtistScoreVis
 
 
@@ -30,7 +30,7 @@ def main(function, releases, genre, amount, score, artist, minreview):
 	if function == "multipleScore":
 		click.echo(multipleScore(releases, amount))
 	if function == "topArtistsinGenre":
-		click.echo(topArtistsinGenre(genre, amount))
+		click.echo(topArtistsinGenre(genre, releases, amount))
 	if function == "artistScoreFilter":
 		click.echo(artistScoreFilter(score, artist))
 	if function == "avgReviewerScore":
@@ -39,6 +39,8 @@ def main(function, releases, genre, amount, score, artist, minreview):
 		click.echo(artistScoreTimeVis(artist))
 	if function == "avgArtistScoreVis":
 		click.echo(avgArtistScoreVis(releases, amount))
+	if function == "topAuthorsGenreDist":
+		click.echo(topAuthorsGenreDist(amount))
 
 
 if __name__ == '__main__':
